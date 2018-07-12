@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<definitions
+        xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+        xmlns:tns="http://localhost:3000/"
+        xmlns:xs="http://www.w3.org/2001/XMLSchema"
+        xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+        xmlns="http://schemas.xmlsoap.org/wsdl/"
+        name="MusicWSDL">
+
+    <!-- Каждый документ WSDL 1.1 можно разбить на следующие логические части:
+
+        определение типов данных (types) — определение вида отправляемых и получаемых сервисом XML-сообщений
+        элементы данных (message) — сообщения, используемые web-сервисом
+        абстрактные операции (portType) — список операций, которые могут быть выполнены с сообщениями
+        связывание сервисов (binding) — способ, которым сообщение будет доставлено
+   !-->
+
+
+    <!-- types -->
+    <types>
+        <xs:schema
+                xmlns:tns="http://schemas.xmlsoap.org/wsdl/"
+                xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                elementFormDefault="qualified"
+                targetNamespace="http://localhost:3000/">
+            <xs:element name="Request">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="username" type="xs:string"/>
+                        <xs:element name="password" type="xs:string"/>
+                        <xs:element name="firstName" type="xs:string"/>
+                        <xs:element name="lastName" type="xs:string"/>
+                        <xs:element name="email" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="Response">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="error" type="xs:string"/>
+                        <xs:element name="object" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:schema>
+    </types>
+
+
+
+    <!-- messages -->
+    <message name="musicRequest">
+        <part name="Request" element="tns:Request"/>
+    </message>
+    <message name="musicResponse">
+        <part name="Response" element="tns:Response"/>
+    </message>
+    <!-- porttype -->
+    <portType name="Port">
+        <operation name="LoginAndRegister">
+            <input message="tns:musicRequest"/>
+            <output message="tns:musicResponse"/>
+        </operation>
+    </portType>
+    <!-- binding -->
+    <binding name="Binding" type="tns:Port">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+        <operation name="LoginAndRegister">
+            <soap:operation soapAction=""/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+    </binding>
+    <!-- Service definition -->
+
+
+
+
+    <service name="musicService">
+        <port name="Port" binding="tns:Binding">
+            <soap:address location="http://localhost:3000/wsdl"/>
+        </port>
+    </service>
+</definitions>

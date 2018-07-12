@@ -1,0 +1,43 @@
+extends layout
+
+block content
+    div.container
+        div.row
+
+            #message
+            #files
+                if message
+                    h1.text-center.error-message #{message}
+                h1.text-center.login-title Добавить песню
+                    div.signup-wall
+                        form(class='form-signin', action='/upload', method='POST' enctype='multipart/form-data' )
+                            input(type='text', name='artist', class='form-control', placeholder='Группа',required, autofocus)
+                            input(type='text', name='song', class='form-control nomargin', placeholder='Песня', required)
+                            input(type='text', name='album', class='form-control', placeholder='Альбом')
+                            input(type='text', name='description', class='form-control', placeholder='Описание')
+                            input(type='date', name='albumY', class='form-control', placeholder='Год альбома')
+                            input(type='text', name='text', class='form-control', placeholder='Текст песни')
+                            input(type='file', id='saving' name='saving', class='form-control',required)
+                            button(class='btn btn-lg btn-primary btn-block', type='submit') Добавить
+
+
+                h1.text-center.login-title Изменить песню
+                        div.signup-wall
+                            form(class='form-signin', action='/update', method='post' enctype='' )
+                                input(type='text', name='artist', class='form-control', placeholder='Группа',required, autofocus)
+                                select(name='song' class='form-control' )
+                                    each file,i in files
+                                        option(value = i) #{file}
+                                input(type='text', name='album', class='form-control', placeholder='Альбом')
+                                input(type='text', name='description', class='form-control', placeholder='Описание')
+                                input(type='date', name='albumY', class='form-control', placeholder='Год альбома')
+                                input(type='text', name='text', class='form-control', placeholder='Текст песни')
+                                button(class='btn btn-lg btn-primary btn-block', type='submit') Изменить
+
+                h1.text-center.login-title Удалить песню
+                    div.signup-wall
+                        form(class='form-signin', action='/delete', method='post' enctype='' )
+                            select(name='song' class='form-control' )
+                                each song,i in files
+                                    option(value = i) #{song}
+                            button(class='btn btn-lg btn-primary btn-block', type='submit') Удалить

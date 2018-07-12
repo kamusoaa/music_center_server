@@ -1,0 +1,36 @@
+extends layout
+
+block content
+    div.container
+        div.row
+
+            #id
+            #message
+            #source
+
+                if message
+                    h1.text-center.error-message #{message}
+                h1.text-center.login-title Создать плейлист
+                    div.signup-wall
+
+                        form(class='form-signin', action='/playlist', method='POST' )
+                            input(type='text', name='userID', class='form-control', placeholder='ID',required, readonly=true, value=id)
+                            input(type='text', name='playlistName', class='form-control', placeholder='Имя',required)
+                            select(name='songs' class='form-control' multiple )
+                                each file,i in source
+                                    option(value = i) #{file}
+
+                            button(class='btn btn-lg btn-primary btn-block', type='submit') Создать плейлист
+                h1.text-center.login-title Изменить плейлист
+                    div.signup-wall
+                        form(class='form-signin', action='/playlistu', method='post')
+                            input(type='text', name='playlistName', class='form-control', placeholder='Имя',required)
+                            select(name='songsu' class='form-control' multiple )
+                                each file,i in source
+                                    option(value = i) #{file}
+                            button(class='btn btn-lg btn-primary btn-block', type='submit') Изменить плейлист
+                h1.text-center.login-title Удалить плейлист
+                    div.signup-wall
+                        form(class='form-signin', action='/playlistd', method='post', enctype='')
+                            input(type='text', name='playlistName', class='form-control', placeholder='Имя',required)
+                            button(class='btn btn-lg btn-primary btn-block', type='submit') Удалить плейлист
